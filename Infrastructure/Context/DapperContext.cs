@@ -8,7 +8,6 @@ public class DapperContext
 {
     private readonly IConfiguration _configuration;
     private readonly string _connectionString;
-    private IDbConnection _connection;
 
     public DapperContext(IConfiguration configuration)
     {
@@ -18,16 +17,6 @@ public class DapperContext
 
     public IDbConnection GetConnection()
     {
-        if (_connection == null || _connection.State == ConnectionState.Closed)
-        {
-            _connection = new SqlConnection(_connectionString);
-        }
-
-        return _connection;
-    }
-
-    public void Dispose()
-    {
-        _connection?.Dispose();
+        return new SqlConnection(_connectionString);
     }
 }
